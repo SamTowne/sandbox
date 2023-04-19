@@ -18,13 +18,13 @@ module "bootstrap" {
 ############################
 # This should be commented out for the first terraform apply so that the tfstate bucket and locking table can be built. After the initial apply, uncomment the s3 backend code and run another apply.
 terraform {
-    backend "s3" {
-      bucket         = "st-sandbox-272773485930-terraform-tfstate"
-      key            = "terraform.tfstate"
-      region         = "us-west-2"
-      dynamodb_table = "st-sandbox-272773485930-dynamodb-terraform-locking"
-      encrypt        = true
-    }
+  backend "s3" {
+    bucket         = "st-sandbox-272773485930-terraform-tfstate"
+    key            = "terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "st-sandbox-272773485930-dynamodb-terraform-locking"
+    encrypt        = true
+  }
 }
 
 #################
