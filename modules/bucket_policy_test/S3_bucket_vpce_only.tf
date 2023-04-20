@@ -20,7 +20,8 @@ resource "aws_s3_bucket_policy" "restrict_to_vpce" {
                    "${aws_s3_bucket.with-policy.arn}/*"],
       "Condition": {
         "StringNotEquals": {
-          "aws:sourceVpce": "${aws_vpc_endpoint.s3.id}"
+          "aws:sourceVpce": "${aws_vpc_endpoint.s3.id}",
+          "aws:PrincipalARN": "arn:aws:iam::272773485930:user/terraform"
           }
         }
       }
