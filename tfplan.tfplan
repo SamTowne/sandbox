@@ -1,0 +1,285 @@
+[0m[1mmodule.bucket_policy_test.aws_s3_bucket_policy.restrict_to_vpce: Refreshing state... [id=test-bucket-272773485930-with-policy][0m
+[0m[1mmodule.bucket_policy_test.aws_vpc_endpoint.s3: Refreshing state... [id=vpce-0612558b8a481fdf2][0m
+[0m[1mmodule.bootstrap.aws_dynamodb_table.tf_lock_state: Refreshing state... [id=st-sandbox-272773485930-dynamodb-terraform-locking][0m
+[0m[1mmodule.bucket_policy_test.aws_s3_bucket.with-policy: Refreshing state... [id=test-bucket-272773485930-with-policy][0m
+[0m[1mmodule.bucket_policy_test.aws_vpc.main: Refreshing state... [id=vpc-0e6e6dd27cf2dcc73][0m
+[0m[1mmodule.bootstrap.aws_s3_bucket.state_bucket: Refreshing state... [id=st-sandbox-272773485930-terraform-tfstate][0m
+[0m[1mmodule.bucket_policy_test.aws_s3_bucket.regular: Refreshing state... [id=test-bucket-272773485930-regular][0m
+[0m
+[1m[36mNote:[0m[1m Objects have changed outside of Terraform[0m
+
+[0mTerraform detected the following changes made outside of Terraform since the
+last "terraform apply":
+
+[1m  # module.bucket_policy_test.aws_s3_bucket.with-policy[0m has changed[0m[0m
+[0m  [33m~[0m[0m resource "aws_s3_bucket" "with-policy" {
+        [1m[0mid[0m[0m                          = "test-bucket-272773485930-with-policy"
+      [33m~[0m [0m[1m[0mpolicy[0m[0m                      = jsonencode(
+          [33m~[0m [0m{
+              [33m~[0m [0mStatement = [
+                  [33m~[0m [0m{
+                      [33m~[0m [0mCondition = {
+                          [31m-[0m [0mArnNotLike      = {
+                              [31m-[0m [0maws:PrincipalARN = "arn:aws:iam::272773485930:user/terraform"
+                            } [90m->[0m [0m[90mnull[0m[0m
+                          [33m~[0m [0mStringNotEquals = {
+                              [32m+[0m [0maws:PrincipalARN = "arn:aws:iam::272773485930:user/terraform"
+                                [90m# (1 unchanged element hidden)[0m[0m
+                            }
+                        }
+                        [90m# (5 unchanged elements hidden)[0m[0m
+                    },
+                ]
+                [90m# (2 unchanged elements hidden)[0m[0m
+            }
+        )
+        [1m[0mtags[0m[0m                        = {}
+        [90m# (10 unchanged attributes hidden)[0m[0m
+
+
+
+        [90m# (3 unchanged blocks hidden)[0m[0m
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create
+  [31m-[0m destroy
+[0m
+Terraform will perform the following actions:
+
+[1m  # module.bucket_policy_test.aws_s3_bucket.with-policy[0m will be [1m[31mdestroyed[0m
+  # (because aws_s3_bucket.with-policy is not in configuration)[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket" "with-policy" {
+      [31m-[0m [0m[1m[0marn[0m[0m                         = "arn:aws:s3:::test-bucket-272773485930-with-policy" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mbucket[0m[0m                      = "test-bucket-272773485930-with-policy" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mbucket_domain_name[0m[0m          = "test-bucket-272773485930-with-policy.s3.amazonaws.com" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mbucket_regional_domain_name[0m[0m = "test-bucket-272773485930-with-policy.s3.us-west-2.amazonaws.com" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mforce_destroy[0m[0m               = false [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mhosted_zone_id[0m[0m              = "Z3BJ6K6RIION7M" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mid[0m[0m                          = "test-bucket-272773485930-with-policy" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mobject_lock_enabled[0m[0m         = false [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mpolicy[0m[0m                      = jsonencode(
+            {
+              [31m-[0m [0mId        = "Access-to-bucket-using-specific-endpoint"
+              [31m-[0m [0mStatement = [
+                  [31m-[0m [0m{
+                      [31m-[0m [0mAction    = "s3:*"
+                      [31m-[0m [0mCondition = {
+                          [31m-[0m [0mStringNotEquals = {
+                              [31m-[0m [0maws:PrincipalARN = "arn:aws:iam::272773485930:user/terraform"
+                              [31m-[0m [0maws:sourceVpce   = "vpce-0612558b8a481fdf2"
+                            }
+                        }
+                      [31m-[0m [0mEffect    = "Deny"
+                      [31m-[0m [0mPrincipal = "*"
+                      [31m-[0m [0mResource  = [
+                          [31m-[0m [0m"arn:aws:s3:::test-bucket-272773485930-with-policy",
+                          [31m-[0m [0m"arn:aws:s3:::test-bucket-272773485930-with-policy/*",
+                        ]
+                      [31m-[0m [0mSid       = "Access-to-specific-VPCE-only"
+                    },
+                ]
+              [31m-[0m [0mVersion   = "2012-10-17"
+            }
+        ) [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mregion[0m[0m                      = "us-west-2" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mrequest_payer[0m[0m               = "BucketOwner" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mtags[0m[0m                        = {} [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mtags_all[0m[0m                    = {
+          [31m-[0m [0m"Project"   = "st-sandbox"
+          [31m-[0m [0m"Terraform" = "true"
+        } [90m->[0m [0m[90mnull[0m[0m
+
+      [31m-[0m [0mgrant {
+          [31m-[0m [0m[1m[0mid[0m[0m          = "faca4e8af0a3fa1e1309cd1887b8b948bd10d181ab1e4cef6f1a63c4bc9fd1a0" [90m->[0m [0m[90mnull[0m[0m
+          [31m-[0m [0m[1m[0mpermissions[0m[0m = [
+              [31m-[0m [0m"FULL_CONTROL",
+            ] [90m->[0m [0m[90mnull[0m[0m
+          [31m-[0m [0m[1m[0mtype[0m[0m        = "CanonicalUser" [90m->[0m [0m[90mnull[0m[0m
+        }
+
+      [31m-[0m [0mserver_side_encryption_configuration {
+          [31m-[0m [0mrule {
+              [31m-[0m [0m[1m[0mbucket_key_enabled[0m[0m = false [90m->[0m [0m[90mnull[0m[0m
+
+              [31m-[0m [0mapply_server_side_encryption_by_default {
+                  [31m-[0m [0m[1m[0msse_algorithm[0m[0m = "AES256" [90m->[0m [0m[90mnull[0m[0m
+                }
+            }
+        }
+
+      [31m-[0m [0mversioning {
+          [31m-[0m [0m[1m[0menabled[0m[0m    = false [90m->[0m [0m[90mnull[0m[0m
+          [31m-[0m [0m[1m[0mmfa_delete[0m[0m = false [90m->[0m [0m[90mnull[0m[0m
+        }
+    }
+
+[1m  # module.bucket_policy_test.aws_s3_bucket_policy.restrict_to_vpce[0m will be [1m[31mdestroyed[0m
+  # (because aws_s3_bucket_policy.restrict_to_vpce is not in configuration)[0m
+[0m  [31m-[0m[0m resource "aws_s3_bucket_policy" "restrict_to_vpce" {
+      [31m-[0m [0m[1m[0mbucket[0m[0m = "test-bucket-272773485930-with-policy" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mid[0m[0m     = "test-bucket-272773485930-with-policy" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mpolicy[0m[0m = jsonencode(
+            {
+              [31m-[0m [0mId        = "Access-to-bucket-using-specific-endpoint"
+              [31m-[0m [0mStatement = [
+                  [31m-[0m [0m{
+                      [31m-[0m [0mAction    = "s3:*"
+                      [31m-[0m [0mCondition = {
+                          [31m-[0m [0mStringNotEquals = {
+                              [31m-[0m [0maws:PrincipalARN = "arn:aws:iam::272773485930:user/terraform"
+                              [31m-[0m [0maws:sourceVpce   = "vpce-0612558b8a481fdf2"
+                            }
+                        }
+                      [31m-[0m [0mEffect    = "Deny"
+                      [31m-[0m [0mPrincipal = "*"
+                      [31m-[0m [0mResource  = [
+                          [31m-[0m [0m"arn:aws:s3:::test-bucket-272773485930-with-policy",
+                          [31m-[0m [0m"arn:aws:s3:::test-bucket-272773485930-with-policy/*",
+                        ]
+                      [31m-[0m [0mSid       = "Access-to-specific-VPCE-only"
+                    },
+                ]
+              [31m-[0m [0mVersion   = "2012-10-17"
+            }
+        ) [90m->[0m [0m[90mnull[0m[0m
+    }
+
+[1m  # module.bucket_policy_test.aws_vpc_endpoint.s3[0m will be [1m[31mdestroyed[0m
+  # (because aws_vpc_endpoint.s3 is not in configuration)[0m
+[0m  [31m-[0m[0m resource "aws_vpc_endpoint" "s3" {
+      [31m-[0m [0m[1m[0marn[0m[0m                   = "arn:aws:ec2:us-west-2:272773485930:vpc-endpoint/vpce-0612558b8a481fdf2" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mcidr_blocks[0m[0m           = [
+          [31m-[0m [0m"3.5.76.0/22",
+          [31m-[0m [0m"3.5.80.0/21",
+          [31m-[0m [0m"18.34.48.0/20",
+          [31m-[0m [0m"18.34.244.0/22",
+          [31m-[0m [0m"52.92.128.0/17",
+          [31m-[0m [0m"52.218.128.0/17",
+        ] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mdns_entry[0m[0m             = [] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mid[0m[0m                    = "vpce-0612558b8a481fdf2" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mip_address_type[0m[0m       = "ipv4" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mnetwork_interface_ids[0m[0m = [] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mowner_id[0m[0m              = "272773485930" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mpolicy[0m[0m                = jsonencode(
+            {
+              [31m-[0m [0mStatement = [
+                  [31m-[0m [0m{
+                      [31m-[0m [0mAction    = "*"
+                      [31m-[0m [0mEffect    = "Allow"
+                      [31m-[0m [0mPrincipal = "*"
+                      [31m-[0m [0mResource  = "*"
+                    },
+                ]
+            }
+        ) [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mprefix_list_id[0m[0m        = "pl-68a54001" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mprivate_dns_enabled[0m[0m   = false [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mrequester_managed[0m[0m     = false [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mroute_table_ids[0m[0m       = [] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0msecurity_group_ids[0m[0m    = [
+          [31m-[0m [0m"sg-0b001096228f9fc1c",
+        ] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mservice_name[0m[0m          = "com.amazonaws.us-west-2.s3" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mstate[0m[0m                 = "available" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0msubnet_ids[0m[0m            = [] [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mtags[0m[0m                  = {} [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mtags_all[0m[0m              = {
+          [31m-[0m [0m"Project"   = "st-sandbox"
+          [31m-[0m [0m"Terraform" = "true"
+        } [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mvpc_endpoint_type[0m[0m     = "Interface" [90m->[0m [0m[90mnull[0m[0m
+      [31m-[0m [0m[1m[0mvpc_id[0m[0m                = "vpc-0e6e6dd27cf2dcc73" [90m->[0m [0m[90mnull[0m[0m
+
+      [31m-[0m [0mdns_options {
+          [31m-[0m [0m[1m[0mdns_record_ip_type[0m[0m = "ipv4" [90m->[0m [0m[90mnull[0m[0m
+        }
+    }
+
+[1m  # module.bucket_policy_test.aws_vpc_endpoint.s3-gateway[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "s3-gateway" {
+      [32m+[0m [0m[1m[0marn[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_blocks[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdns_entry[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mip_address_type[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0mnetwork_interface_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mpolicy[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mprefix_list_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns_enabled[0m[0m   = false
+      [32m+[0m [0m[1m[0mrequester_managed[0m[0m     = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_ids[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_group_ids[0m[0m    = (known after apply)
+      [32m+[0m [0m[1m[0mservice_name[0m[0m          = "com.amazonaws.us-west-2.s3"
+      [32m+[0m [0m[1m[0mstate[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m              = {
+          [32m+[0m [0m"Project"   = "st-sandbox"
+          [32m+[0m [0m"Terraform" = "true"
+        }
+      [32m+[0m [0m[1m[0mvpc_endpoint_type[0m[0m     = "Gateway"
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                = "vpc-0e6e6dd27cf2dcc73"
+
+      [32m+[0m [0mdns_options {
+          [32m+[0m [0m[1m[0mdns_record_ip_type[0m[0m = (known after apply)
+        }
+    }
+
+[1m  # module.bucket_policy_test.aws_vpc_endpoint.s3-interface[0m will be created[0m[0m
+[0m  [32m+[0m[0m resource "aws_vpc_endpoint" "s3-interface" {
+      [32m+[0m [0m[1m[0marn[0m[0m                   = (known after apply)
+      [32m+[0m [0m[1m[0mcidr_blocks[0m[0m           = (known after apply)
+      [32m+[0m [0m[1m[0mdns_entry[0m[0m             = (known after apply)
+      [32m+[0m [0m[1m[0mid[0m[0m                    = (known after apply)
+      [32m+[0m [0m[1m[0mip_address_type[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0mnetwork_interface_ids[0m[0m = (known after apply)
+      [32m+[0m [0m[1m[0mowner_id[0m[0m              = (known after apply)
+      [32m+[0m [0m[1m[0mpolicy[0m[0m                = (known after apply)
+      [32m+[0m [0m[1m[0mprefix_list_id[0m[0m        = (known after apply)
+      [32m+[0m [0m[1m[0mprivate_dns_enabled[0m[0m   = true
+      [32m+[0m [0m[1m[0mrequester_managed[0m[0m     = (known after apply)
+      [32m+[0m [0m[1m[0mroute_table_ids[0m[0m       = (known after apply)
+      [32m+[0m [0m[1m[0msecurity_group_ids[0m[0m    = (known after apply)
+      [32m+[0m [0m[1m[0mservice_name[0m[0m          = "com.amazonaws.us-west-2.s3"
+      [32m+[0m [0m[1m[0mstate[0m[0m                 = (known after apply)
+      [32m+[0m [0m[1m[0msubnet_ids[0m[0m            = (known after apply)
+      [32m+[0m [0m[1m[0mtags_all[0m[0m              = {
+          [32m+[0m [0m"Project"   = "st-sandbox"
+          [32m+[0m [0m"Terraform" = "true"
+        }
+      [32m+[0m [0m[1m[0mvpc_endpoint_type[0m[0m     = "Interface"
+      [32m+[0m [0m[1m[0mvpc_id[0m[0m                = "vpc-0e6e6dd27cf2dcc73"
+
+      [32m+[0m [0mdns_options {
+          [32m+[0m [0m[1m[0mdns_record_ip_type[0m[0m = (known after apply)
+        }
+    }
+
+[0m[1mPlan:[0m 2 to add, 0 to change, 3 to destroy.
+[0m[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mArgument is deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  with module.bootstrap.aws_s3_bucket.state_bucket,
+[33m│[0m [0m  on modules\bootstrap\bootstrap.tf line 2, in resource "aws_s3_bucket" "state_bucket":
+[33m│[0m [0m   2: resource "aws_s3_bucket" "state_bucket" [4m{[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mUse the aws_s3_bucket_lifecycle_configuration resource instead
+[33m│[0m [0m
+[33m│[0m [0m(and 5 more similar warnings elsewhere)
+[33m╵[0m[0m
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
+Releasing state lock. This may take a few moments...
